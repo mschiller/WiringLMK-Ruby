@@ -2,7 +2,7 @@ Gem::Specification.new do |s|
   s.name	= 'wiring_lmk'
   s.version	= '2.0.0'
   s.license = 'GNU Lesser General Public License v3'
-  s.date	= '2013-04-07'
+  s.date	= '2016-01-10'
   s.platform= Gem::Platform::RUBY
   s.summary	= "Arduino wiring-like library for Banana Pi GPIO. Will only work on a Pi. Alpha version."
   s.authors	= ["Gordon","Phil"]
