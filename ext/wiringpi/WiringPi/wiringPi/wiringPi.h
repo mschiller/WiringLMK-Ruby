@@ -46,6 +46,7 @@
 #define	SOFT_TONE_OUTPUT	 5
 #define	PWM_TONE_OUTPUT		 6
 
+
 #define	LOW			 0
 #define	HIGH			 1
 
@@ -75,8 +76,7 @@
 #define	PI_MODEL_B		2
 #define	PI_MODEL_BP		3
 #define	PI_MODEL_CM		4
-#define	PI_MODEL_AP		5
-#define	PI_MODEL_2		6
+#define   PI_MODEL_BPR   5 //add for BananaPro by LeMaker team
 
 #define	PI_VERSION_UNKNOWN	0
 #define	PI_VERSION_1		1
@@ -88,7 +88,10 @@
 #define	PI_MAKER_EGOMAN		1
 #define	PI_MAKER_SONY		2
 #define	PI_MAKER_QISDA		3
-#define	PI_MAKER_MBEST		4
+#define   PI_MAKER_LEMAKER  4  //add for BananaPro by LeMaker team
+
+#define BP_REV 3  //add for BananaPro by lemaker team
+#define S500_REV 4  //add for S500
 
 extern const char *piModelNames    [7] ;
 extern const char *piRevisionNames [5] ;
@@ -110,31 +113,31 @@ extern const char *piMakerNames    [5] ;
 // wiringPiNodeStruct:
 //	This describes additional device nodes in the extended wiringPi
 //	2.0 scheme of things.
-//	It's a simple linked list for now, but will hopefully migrate to 
+//	It's a simple linked list for now, but will hopefully migrate to
 //	a binary tree for efficiency reasons - but then again, the chances
 //	of more than 1 or 2 devices being added are fairly slim, so who
 //	knows....
 
 struct wiringPiNodeStruct
 {
-  int     pinBase ;
-  int     pinMax ;
+    int     pinBase ;
+    int     pinMax ;
 
-  int          fd ;	// Node specific
-  unsigned int data0 ;	//  ditto
-  unsigned int data1 ;	//  ditto
-  unsigned int data2 ;	//  ditto
-  unsigned int data3 ;	//  ditto
+    int          fd ;	// Node specific
+    unsigned int data0 ;	//  ditto
+    unsigned int data1 ;	//  ditto
+    unsigned int data2 ;	//  ditto
+    unsigned int data3 ;	//  ditto
 
-  void   (*pinMode)         (struct wiringPiNodeStruct *node, int pin, int mode) ;
-  void   (*pullUpDnControl) (struct wiringPiNodeStruct *node, int pin, int mode) ;
-  int    (*digitalRead)     (struct wiringPiNodeStruct *node, int pin) ;
-  void   (*digitalWrite)    (struct wiringPiNodeStruct *node, int pin, int value) ;
-  void   (*pwmWrite)        (struct wiringPiNodeStruct *node, int pin, int value) ;
-  int    (*analogRead)      (struct wiringPiNodeStruct *node, int pin) ;
-  void   (*analogWrite)     (struct wiringPiNodeStruct *node, int pin, int value) ;
+    void   (*pinMode)         (struct wiringPiNodeStruct *node, int pin, int mode) ;
+    void   (*pullUpDnControl) (struct wiringPiNodeStruct *node, int pin, int mode) ;
+    int    (*digitalRead)     (struct wiringPiNodeStruct *node, int pin) ;
+    void   (*digitalWrite)    (struct wiringPiNodeStruct *node, int pin, int value) ;
+    void   (*pwmWrite)        (struct wiringPiNodeStruct *node, int pin, int value) ;
+    int    (*analogRead)      (struct wiringPiNodeStruct *node, int pin) ;
+    void   (*analogWrite)     (struct wiringPiNodeStruct *node, int pin, int value) ;
 
-  struct wiringPiNodeStruct *next ;
+    struct wiringPiNodeStruct *next ;
 } ;
 
 extern struct wiringPiNodeStruct *wiringPiNodes ;
@@ -164,6 +167,7 @@ extern int  wiringPiSetupSys    (void) ;
 extern int  wiringPiSetupGpio   (void) ;
 extern int  wiringPiSetupPhys   (void) ;
 
+
 extern void pinModeAlt          (int pin, int mode) ;
 extern void pinMode             (int pin, int mode) ;
 extern void pullUpDnControl     (int pin, int pud) ;
@@ -173,7 +177,7 @@ extern void pwmWrite            (int pin, int value) ;
 extern int  analogRead          (int pin) ;
 extern void analogWrite         (int pin, int value) ;
 
-// PiFace specifics 
+// PiFace specifics
 //	(Deprecated)
 
 extern int  wiringPiSetupPiFace (void) ;
@@ -185,6 +189,7 @@ extern int  piBoardRev          (void) ;
 extern void piBoardId           (int *model, int *rev, int *mem, int *maker, int *overVolted) ;
 extern int  wpiPinToGpio        (int wpiPin) ;
 extern int  physPinToGpio       (int physPin) ;
+extern int  physPinToPin         (int physPin); //add by LeMaker team for Bananapi
 extern void setPadDrive         (int group, int value) ;
 extern int  getAlt              (int pin) ;
 extern void pwmToneWrite        (int pin, int freq) ;

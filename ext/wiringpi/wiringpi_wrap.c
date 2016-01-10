@@ -1855,7 +1855,6 @@ static VALUE mWiringpi;
 #include "WiringPi/wiringPi/wiringPiSPI.h"
 #include "WiringPi/wiringPi/wiringSerial.h"
 #include "WiringPi/wiringPi/wiringShift.h"
-#include "WiringPi/wiringPi/wpiExtensions.h"
 
 
 

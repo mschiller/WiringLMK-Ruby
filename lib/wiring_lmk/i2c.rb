@@ -1,4 +1,4 @@
-module WiringPi
+module WiringLmk
   class I2C
 	@device_id = 0
 	def initialize(device_address)

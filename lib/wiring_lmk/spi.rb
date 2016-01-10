@@ -1,4 +1,4 @@
-module WiringPi
+module WiringLmk
   class SPI
     @channel = 0
 	def initialize(channel,speed)

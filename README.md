@@ -1,12 +1,12 @@
-# WiringPi
-WiringPi is an implementation of most of the Arduino Wiring functions for the Raspberry Pi, this gem is a wrapper for the main wiringpi library and provides a nice OO interface with a few other handy helpers.
+# WiringLmk
+WiringLmk is an implementation of most of the Arduino Wiring functions for the Banana Pi, this gem is a wrapper for the main wiringpi library and provides a nice OO interface with a few other handy helpers.
 
 ## Installation
 Install with `gem install wiringpi2` or use bundler's Gemfile
 ```
 source 'https://rubygems.org'
 
-gem 'wiringpi2' # https://github.com/WiringPi/WiringPi-Ruby
+gem 'wiringpi2' # https://github.com/mschiller/WiringLmk-Ruby
 ```
 then: `bundle install`
 
@@ -18,19 +18,19 @@ require 'bundler'
 Bundler.setup
 Bundler.require
 
-io = WiringPi::GPIO.new do |gpio|
-  gpio.pin_mode(0, WiringPi::OUTPUT)
-  gpio.pin_mode(1, WiringPi::INPUT)
+io = WiringLmk::GPIO.new do |gpio|
+  gpio.pin_mode(0, WiringLmk::OUTPUT)
+  gpio.pin_mode(1, WiringLmk::INPUT)
 end
 
 pin_state = io.digital_read(1) # Read from pin 1
 puts pin_state
 
-io.digital_write(0, WiringPi::HIGH) # Turn pin 0 on
+io.digital_write(0, WiringLmk::HIGH) # Turn pin 0 on
 io.delay(100)                       # Wait
-io.digital_write(0, WiringPi::LOW)  # Turn pin 0 off
+io.digital_write(0, WiringLmk::LOW)  # Turn pin 0 off
 ```
-You will need to run your scripts as root because WiringPi accesses `/dev/mem`
+You will need to run your scripts as root because WiringLmk accesses `/dev/mem`
 
 ## Reference
 

@@ -1,4 +1,4 @@
-module WiringPi
+module WiringLmk
   class Serial
 
     @id = 0

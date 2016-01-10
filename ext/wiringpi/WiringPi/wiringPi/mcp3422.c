@@ -31,8 +31,8 @@
 #include <sys/ioctl.h>
 #include <linux/spi/spidev.h>
 
-#include <wiringPi.h>
-#include <wiringPiI2C.h>
+#include "wiringPi.h"
+#include "wiringPiI2C.h"
 
 #include "mcp3422.h"
 
@@ -45,44 +45,47 @@
 
 int myAnalogRead (struct wiringPiNodeStruct *node, int chan)
 {
-  unsigned char config ;
-  unsigned char buffer [4] ;
-  int value = 0 ;
+    unsigned char config ;
+    unsigned char buffer [4] ;
+    int value = 0 ;
+	int ret = -1;
 
-// One-shot mode, trigger plus the other configs.
+    // One-shot mode, trigger plus the other configs.
 
-  config = 0x80 | ((chan - node->pinBase) << 5) | (node->data0 << 2) | (node->data1) ;
-  
-  wiringPiI2CWrite (node->fd, config) ;
+    config = 0x80 | ((chan - node->pinBase) << 5) | (node->data0 << 2) | (node->data1) ;
 
-  switch (node->data0)	// Sample rate
-  {
+    wiringPiI2CWrite (node->fd, config) ;
+
+    switch (node->data0)	// Sample rate
+    {
     case MCP3422_SR_3_75:			// 18 bits
-      delay (270) ;
-      read (node->fd, buffer, 4) ;
-      value = ((buffer [0] & 3) << 16) | (buffer [1] << 8) | buffer [0] ;
-      break ;
+        delay (270) ;
+        ret = read (node->fd, buffer, 4) ;
+        value = ((buffer [0] & 3) << 16) | (buffer [1] << 8) | buffer [0] ;
+        break ;
 
     case MCP3422_SR_15:				// 16 bits
-      delay ( 70) ;
-      read (node->fd, buffer, 3) ;
-      value = (buffer [0] << 8) | buffer [1] ;
-      break ;
+        delay ( 70) ;
+        ret = read (node->fd, buffer, 3) ;
+        value = (buffer [0] << 8) | buffer [1] ;
+        break ;
 
     case MCP3422_SR_60:				// 14 bits
-      delay ( 17) ;
-      read (node->fd, buffer, 3) ;
-      value = ((buffer [0] & 0x3F) << 8) | buffer [1] ;
-      break ;
+        delay ( 17) ;
+        ret = read (node->fd, buffer, 3) ;
+        value = ((buffer [0] & 0x3F) << 8) | buffer [1] ;
+        break ;
 
     case MCP3422_SR_240:			// 12 bits
-      delay (  5) ;
-      read (node->fd, buffer, 3) ;
-      value = ((buffer [0] & 0x0F) << 8) | buffer [0] ;
-      break ;
-  }
+        delay (  5) ;
+        ret = read (node->fd, buffer, 3) ;
+        value = ((buffer [0] & 0x0F) << 8) | buffer [0] ;
+        break ;
+    }
 
-  return value ;
+	ret = ret;
+
+    return value ;
 }
 
 
@@ -94,17 +97,17 @@ int myAnalogRead (struct wiringPiNodeStruct *node, int chan)
 
 int mcp3422Setup (int pinBase, int i2cAddress, int sampleRate, int gain)
 {
-  int fd ;
-  struct wiringPiNodeStruct *node ;
+    int fd ;
+    struct wiringPiNodeStruct *node ;
 
-  if ((fd = wiringPiI2CSetup (i2cAddress)) < 0)
-    return fd ;
+    if ((fd = wiringPiI2CSetup (i2cAddress)) < 0)
+        return fd ;
 
-  node = wiringPiNewNode (pinBase, 4) ;
+    node = wiringPiNewNode (pinBase, 4) ;
 
-  node->data0      = sampleRate ;
-  node->data1      = gain ;
-  node->analogRead = myAnalogRead ;
+    node->data0      = sampleRate ;
+    node->data1      = gain ;
+    node->analogRead = myAnalogRead ;
 
-  return 0 ;
+    return 0 ;
 }

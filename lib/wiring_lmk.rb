@@ -1,5 +1,5 @@
 require 'wiringpi/wiringpi'
-module WiringPi
+module WiringLmk
   extend self
 
   HIGH = 1
@@ -39,4 +39,4 @@ module WiringPi
   end
 
 end
-Dir[File.dirname(__FILE__) + '/wiringpi/*.rb'].each {|file| require file }
+Dir[File.dirname(__FILE__) + '/wiring_lmk/*.rb'].each {|file| require file }

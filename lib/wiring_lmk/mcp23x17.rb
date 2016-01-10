@@ -1,4 +1,4 @@
-module WiringPi
+module WiringLmk
   class Modules
     class Mcp23017 < ModuleBase
 
